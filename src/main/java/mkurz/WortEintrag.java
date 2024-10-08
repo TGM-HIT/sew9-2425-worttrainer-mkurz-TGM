@@ -1,12 +1,13 @@
 package mkurz;
 
+import java.io.Serializable;
 import java.net.URI;
 
-public class Wort {
+public class WortEintrag implements Serializable {
     private final String wort;
     private final URI url;
 
-    public Wort(String wort, URI url) {
+    public WortEintrag(String wort, URI url) {
         this.wort = wort;
         this.url = url;
     }
@@ -21,5 +22,10 @@ public class Wort {
 
     public URI getUrl() {
         return url;
+    }
+
+    @Override
+    public String toString() {
+        return "-" + wort + '\n' + "-" + url + '\n';
     }
 }
