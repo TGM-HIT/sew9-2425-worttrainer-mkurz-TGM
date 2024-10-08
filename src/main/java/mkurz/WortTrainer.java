@@ -24,6 +24,7 @@ public class WortTrainer implements Serializable {
     public WortTrainer(ArrayList<WortEintrag> list) {
         if (list == null) throw new IllegalArgumentException("Die Liste ist Leer");
         this.list = list;
+        this.selectWortEintrag = list.get(0);
     }
 
     /**

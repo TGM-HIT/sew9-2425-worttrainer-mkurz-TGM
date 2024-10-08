@@ -1,0 +1,22 @@
+{
+  "list": [
+    {
+      "wort": "Hund",
+      "url": "https://woofwell.com/cdn/shop/files/Golden-Retriever-Health-WoofWell-Breed-Specific-Dog-Supplements_1600x.jpg?v\u003d1621360789"
+    },
+    {
+      "wort": "Katze",
+      "url": "https://images.stockcake.com/public/7/3/5/735c9253-585e-4e1f-8329-d012fb99111f_medium/cozy-tabby-cat-stockcake.jpg"
+    },
+    {
+      "wort": "Vogel",
+      "url": "https://images.stockcake.com/public/6/f/f/6ff6a602-b116-4399-8ea0-66c712bd72d1_medium/vivid-autumn-bird-stockcake.jpg"
+    }
+  ],
+  "selectWortEintrag": {
+    "wort": "Katze",
+    "url": "https://images.stockcake.com/public/7/3/5/735c9253-585e-4e1f-8329-d012fb99111f_medium/cozy-tabby-cat-stockcake.jpg"
+  },
+  "answer": 4,
+  "answerC": 2
+}

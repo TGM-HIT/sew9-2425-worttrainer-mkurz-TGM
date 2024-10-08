@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class WortTrainerUI {
     public static void main(String[] args) throws MalformedURLException {
         WortTrainer wt;
-
+        System.out.println("WortTrainerUI");
         try {
             wt = Persistance.load();
         } catch (IOException e) {
