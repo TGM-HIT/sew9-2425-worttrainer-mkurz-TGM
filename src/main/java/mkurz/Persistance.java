@@ -1,28 +1,42 @@
 package mkurz;
 
-import java.io.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+
+/**
+ * Die Klasse Persistance bietet Methoden zum Speichern und Laden
+ * von WortTrainer-Objekten in eine Datei.
+ */
 public class Persistance {
 
+    private static final String FILE_PATH = "src/main/resources/worttrainer.json";
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+    /**
+     * Speichert ein WortTrainer-Objekt in einer JSON-Datei.
+     *
+     * @param wt das zu speichernde WortTrainer-Objekt
+     * @throws IOException wenn ein I/O-Fehler auftritt
+     */
     public static void save(WortTrainer wt) throws IOException {
-        FileOutputStream f = new FileOutputStream(new File("src/main/resources/worttrainer.txt"));
-        ObjectOutputStream o = new ObjectOutputStream(f);
-
-        o.writeObject(wt);
-
-        o.close();
-        f.close();
+        try (FileWriter writer = new FileWriter(FILE_PATH)) {
+            gson.toJson(wt, writer);
+        }
     }
 
-    public static WortTrainer load() throws IOException, ClassNotFoundException {
-        FileInputStream f = new FileInputStream(new File("src/main/resources/worttrainer.txt"));
-        ObjectInputStream o = new ObjectInputStream(f);
-
-        WortTrainer wt = (WortTrainer) o.readObject();
-
-        o.close();
-        f.close();
-
-        return wt;
+    /**
+     * Lädt ein WortTrainer-Objekt aus einer JSON-Datei.
+     *
+     * @return das geladene WortTrainer-Objekt
+     * @throws IOException wenn ein I/O-Fehler auftritt
+     */
+    public static WortTrainer load() throws IOException {
+        try (FileReader reader = new FileReader(FILE_PATH)) {
+            return gson.fromJson(reader, WortTrainer.class);
+        }
     }
 }

@@ -6,13 +6,19 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.util.ArrayList;
 
+/**
+ * Die Klasse WortTrainerUI ist die Benutzeroberfläche für das Worttrainer-Spiel.
+ * Sie ist für die Steuerung der Hauptanwendung verantwortlich, einschließlich
+ * der Anzeige der aktuellen Wortstatistik und der Benutzerinteraktion.
+ * @author Matthias
+ */
 public class WortTrainerUI {
     public static void main(String[] args) throws MalformedURLException {
         WortTrainer wt;
-
+        System.out.println("WortTrainerUI");
         try {
             wt = Persistance.load();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             ArrayList<WortEintrag> list = new ArrayList<>();
             try {
                 list.add(new WortEintrag("Hund", new URI("https://woofwell.com/cdn/shop/files/Golden-Retriever-Health-WoofWell-Breed-Specific-Dog-Supplements_1600x.jpg?v=1621360789")));
@@ -54,5 +60,4 @@ public class WortTrainerUI {
             e.printStackTrace();
         }
     }
-
 }
