@@ -31,6 +31,7 @@ public class WortTrainerUI {
             }
         }
 
+        
         while (true) {
             WortEintrag currentEntry = wt.getCurrWortEintrag();
             ImageIcon icon = new ImageIcon(currentEntry.getUrl().toURL());
