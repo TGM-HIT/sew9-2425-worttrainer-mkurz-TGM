@@ -18,7 +18,7 @@ public class WortTrainerUI {
 
         try {
             wt = Persistance.load();
-        } catch (IOException | ClassNotFoundException e) {
+        } catch (IOException e) {
             ArrayList<WortEintrag> list = new ArrayList<>();
             try {
                 list.add(new WortEintrag("Hund", new URI("https://woofwell.com/cdn/shop/files/Golden-Retriever-Health-WoofWell-Breed-Specific-Dog-Supplements_1600x.jpg?v=1621360789")));

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class PersistanceTest {
 
-    private static final String FILE_PATH = "src/main/resources/worttrainer.txt";
+    private static final String FILE_PATH = "src/main/resources/worttrainer.json";
     private WortTrainer trainer;
 
     @BeforeEach
