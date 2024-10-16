@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
@@ -34,8 +33,8 @@ class PersistanceTest {
 
     @Test
     public void testSaveAndLoad() throws IOException, ClassNotFoundException {
-        Persistance.save(trainer);
-        WortTrainer loadedTrainer = Persistance.load();
+        SaveLoadJson.save(trainer);
+        WortTrainer loadedTrainer = SaveLoadJson.load();
         assertEquals(trainer.toString(), loadedTrainer.toString());
     }
 

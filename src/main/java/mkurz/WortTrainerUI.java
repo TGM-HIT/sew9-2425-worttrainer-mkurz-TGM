@@ -15,6 +15,8 @@ import java.util.ArrayList;
 public class WortTrainerUI {
     public static void main(String[] args) throws MalformedURLException {
         WortTrainer wt = null;
+        SaveLoad slj = new SaveLoadJson();
+
 
         // Prompt user to start over
         int startOver = JOptionPane.showConfirmDialog(null,
@@ -32,10 +34,10 @@ public class WortTrainerUI {
                 wt = new WortTrainer(list);
 
                 // Save the new WortTrainer
-                Persistance.save(wt);
+                slj.save(wt);
             } else {
                 // Load existing WortTrainer
-                wt = Persistance.load();
+                wt = slj.load();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -69,7 +71,7 @@ public class WortTrainerUI {
         }
 
         try {
-            Persistance.save(wt);
+            slj.save(wt);
         } catch (IOException e) {
             e.printStackTrace();
         }

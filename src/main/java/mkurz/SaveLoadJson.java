@@ -11,7 +11,7 @@ import java.io.IOException;
  * Die Klasse Persistance bietet Methoden zum Speichern und Laden
  * von WortTrainer-Objekten in eine Datei.
  */
-public class Persistance {
+public class SaveLoadJson implements SaveLoad{
 
     private static final String FILE_PATH = "src/main/resources/worttrainer.json";
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -22,7 +22,7 @@ public class Persistance {
      * @param wt das zu speichernde WortTrainer-Objekt
      * @throws IOException wenn ein I/O-Fehler auftritt
      */
-    public static void save(WortTrainer wt) throws IOException {
+    public void save(WortTrainer wt) throws IOException {
         try (FileWriter writer = new FileWriter(FILE_PATH)) {
             gson.toJson(wt, writer);
         }
@@ -34,7 +34,7 @@ public class Persistance {
      * @return das geladene WortTrainer-Objekt
      * @throws IOException wenn ein I/O-Fehler auftritt
      */
-    public static WortTrainer load() throws IOException {
+    public WortTrainer load() throws IOException {
         try (FileReader reader = new FileReader(FILE_PATH)) {
             return gson.fromJson(reader, WortTrainer.class);
         }
