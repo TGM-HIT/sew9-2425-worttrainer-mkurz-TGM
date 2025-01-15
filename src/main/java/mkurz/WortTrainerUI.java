@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 /**
@@ -13,7 +14,7 @@ import java.util.ArrayList;
  * @author Matthias
  */
 public class WortTrainerUI {
-    public static void main(String[] args) throws MalformedURLException {
+    public static void main(String[] args) throws URISyntaxException, MalformedURLException {
         WortTrainer wt = null;
         SaveLoad slj = new SaveLoadJson();
 
@@ -23,45 +24,50 @@ public class WortTrainerUI {
                 "Worttrainer",
                 JOptionPane.YES_NO_OPTION);
 
-        try {
-            if (startOver == JOptionPane.YES_OPTION) {
+        if (startOver == JOptionPane.YES_OPTION) {
 
+            ArrayList<WortEintrag> list = new ArrayList<>();
+
+            list.add(createWortEintrag("Hund",""));
+            list.add(createWortEintrag("Katze","https://images.stockcake.com/public/7/3/5/735c9253-585e-4e1f-8329-d012fb99111f_medium/cozy-tabby-cat-stockcake.jpg"));
+            list.add(createWortEintrag("Vogel","https://images.stockcake.com/public/6/f/f/6ff6a602-b116-4399-8ea0-66c712bd72d1_medium/vivid-autumn-bird-stockcake.jpg"));
+            wt = new WortTrainer(list);
+
+            try {
+                slj.save(wt);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+
+        } else {
+            try {
+                wt = slj.load();
+            } catch (IOException | ClassNotFoundException e) {
                 ArrayList<WortEintrag> list = new ArrayList<>();
-                list.add(new WortEintrag("Hund", new URI("https://woofwell.com/cdn/shop/files/Golden-Retriever-Health-WoofWell-Breed-Specific-Dog-Supplements_1600x.jpg?v=1621360789")));
-                list.add(new WortEintrag("Katze", new URI("https://images.stockcake.com/public/7/3/5/735c9253-585e-4e1f-8329-d012fb99111f_medium/cozy-tabby-cat-stockcake.jpg")));
-                list.add(new WortEintrag("Vogel", new URI("https://images.stockcake.com/public/6/f/f/6ff6a602-b116-4399-8ea0-66c712bd72d1_medium/vivid-autumn-bird-stockcake.jpg")));
+
+                list.add(createWortEintrag("Hund",""));
+                list.add(createWortEintrag("Katze","https://images.stockcake.com/public/7/3/5/735c9253-585e-4e1f-8329-d012fb99111f_medium/cozy-tabby-cat-stockcake.jpg"));
+                list.add(createWortEintrag("Vogel","https://images.stockcake.com/public/6/f/f/6ff6a602-b116-4399-8ea0-66c712bd72d1_medium/vivid-autumn-bird-stockcake.jpg"));
+
                 wt = new WortTrainer(list);
 
-                slj.save(wt);
-
-                
-            } else {
-                try {
-                    wt = slj.load();
-                } catch (IOException | ClassNotFoundException e) {
-                    ArrayList<WortEintrag> list = new ArrayList<>();
-                    try {
-                        list.add(new WortEintrag("Hund", new URI("https://woofwell.com/cdn/shop/files/Golden-Retriever-Health-WoofWell-Breed-Specific-Dog-Supplements_1600x.jpg?v=1621360789")));
-                        list.add(new WortEintrag("Katze", new URI("https://images.stockcake.com/public/7/3/5/735c9253-585e-4e1f-8329-d012fb99111f_medium/cozy-tabby-cat-stockcake.jpg")));
-                        list.add(new WortEintrag("Vogel", new URI("https://images.stockcake.com/public/6/f/f/6ff6a602-b116-4399-8ea0-66c712bd72d1_medium/vivid-autumn-bird-stockcake.jpg")));
-                        wt = new WortTrainer(list);
-                    } catch (Exception uriException) {
-                        uriException.printStackTrace();
-                        return;
-                    }
-                }
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        } catch (Exception uriException) {
-            uriException.printStackTrace();
-            return;
         }
 
         while (true) {
             WortEintrag currentEntry = wt.getCurrWortEintrag();
-            ImageIcon icon = new ImageIcon(currentEntry.getUrl().toURL());
+            ImageIcon icon = null;
+            try {
+                icon = new ImageIcon(currentEntry.getUrl().toURL());
+            } catch (MalformedURLException e) {
+                throw new RuntimeException(e);
+            } catch (IllegalArgumentException e){
+                wt.next();
+                //icon = new ImageIcon(new URI("https://www.freeiconspng.com/uploads/orange-error-icon-0.png").toURL());
+                System.out.println("No Pic");
+                continue;
+            }
             String message = "Aktuelle Statistik:\n" + wt +
                     "\nBitte geben Sie das Wort ein:";
 
@@ -87,5 +93,13 @@ public class WortTrainerUI {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    private static WortEintrag createWortEintrag(String wort, String url){
+        try {
+            return new WortEintrag(wort, new URI(url));
+        } catch (URISyntaxException e) {
+            return null;
+        }
+
     }
 }

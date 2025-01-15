@@ -81,6 +81,10 @@ public class WortTrainer implements Serializable {
         }
     }
 
+    public void next(){
+        this.getRandomEintrag();
+    }
+
     /**
      * Gibt die Anzahl der Antworten zurück.
      *
